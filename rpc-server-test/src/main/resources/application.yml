@@ -1,0 +1,6 @@
+server:
+  port: 8081
+spring:
+  xml:
+    namespaces:
+      doan-xem: /xml-rpc
