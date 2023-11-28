@@ -1,1 +1,30 @@
-server.port=8090
+server:
+  port: 8090
+call:
+  ipcc:
+#    xmlRpcUrl: http://10.208.70.9:8092/agentserver,http://10.208.70.10:8092/agentserver,http://10.40.6.4:8083/agentserver,http://10.40.6.5:8083/agentserver,http://192.168.92.13:8282/agentserver,http://192.168.92.14:8282/agentserver
+    xmlRpcUrl: http://localhost:8088
+    user: 3512f33ad9b9808749c3381f84ab61cd
+    password: 6a67f616bfffe3eb4d34a204adf615da
+    appCode: COC
+    methods: IPCCCalloutGW.dialCallOut
+
+spring:
+  data:
+    cassandra:
+      schema-action: create_if_not_exists
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        globally_quoted_identifiers: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/test_xmlrpc
+    username: postgres
+    password: sang.air.0101

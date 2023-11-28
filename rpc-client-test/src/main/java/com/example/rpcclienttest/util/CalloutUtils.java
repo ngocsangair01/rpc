@@ -1,4 +1,4 @@
-package com.example.rpcclienttest;
+package com.example.rpcclienttest.util;
 
 import org.apache.xmlrpc.XmlRpcException;
 import org.apache.xmlrpc.client.XmlRpcClient;

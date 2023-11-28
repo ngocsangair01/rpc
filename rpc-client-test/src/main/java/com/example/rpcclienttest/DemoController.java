@@ -1,27 +1,24 @@
 package com.example.rpcclienttest;
 
+import com.example.rpcclienttest.model.ExecuteCalloutModel;
+import com.example.rpcclienttest.service.CalloutHandler;
 import org.apache.xmlrpc.XmlRpcException;
-import org.apache.xmlrpc.client.XmlRpcClient;
-import org.apache.xmlrpc.client.XmlRpcClientConfig;
-import org.apache.xmlrpc.client.XmlRpcClientConfigImpl;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.List;
 
 @RestController
 public class DemoController {
+    private final CalloutHandler calloutHandler;
 
-    @GetMapping
-    public ResponseEntity<?> handleXmlRpcRequest() throws XmlRpcException, MalformedURLException {
-        XmlRpcClientConfigImpl config = new XmlRpcClientConfigImpl();
-        config.setServerURL(new URL("http://localhost:8088"));
-        XmlRpcClient rc = new XmlRpcClient();
-        rc.setConfig(config);
-        Integer res = (Integer)rc.execute("SERVER.add", List.of(2,3));
-        System.out.println(res);
+    public DemoController(CalloutHandler calloutHandler) {
+        this.calloutHandler = calloutHandler;
+    }
+
+    @GetMapping()
+    public ResponseEntity<?> handleXmlRpcRequest(@RequestBody ExecuteCalloutModel model) throws XmlRpcException, MalformedURLException {
+        Object res = calloutHandler.executeCallout(model.getIpccUser(), model.getCallingNumber(), model.getTransactionId());
         return ResponseEntity.ok(res);
     }
 }

@@ -1,4 +1,4 @@
-package com.viettel.cso.domain;
+package com.example.rpcclienttest.model;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;

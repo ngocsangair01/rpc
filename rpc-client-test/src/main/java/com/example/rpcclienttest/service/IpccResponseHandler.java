@@ -1,31 +1,49 @@
-package com.example.rpcclienttest;
+package com.example.rpcclienttest.service;
 
+import com.example.rpcclienttest.model.XmlRpcIpccResponse;
+import com.example.rpcclienttest.repos.XmlRpcResponseRepo;
+import org.apache.xmlrpc.XmlRpcException;
+import org.apache.xmlrpc.server.PropertyHandlerMapping;
+import org.apache.xmlrpc.webserver.WebServer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Component;
 
+import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+@Component
 public class IpccResponseHandler {
 
     private static final Logger logger = LoggerFactory.getLogger(IpccResponseHandler.class);
     protected static Map<String, XmlRpcIpccResponse> mapResponse = new HashMap<>();
 
-    /**
-     * @param callStatus    ket qua cuoc goi thanh cong hay that bai, chi tiet ra
-     *                      sao?
-     * @param transactionId
-     * @param callOutId
-     * @param startTime
-     * @param duration
-     * @param deviceId
-     * @return
-     * @throws Exception
-     */
+
+    private final XmlRpcResponseRepo repo;
+
+    public IpccResponseHandler(XmlRpcResponseRepo repo) {
+        this.repo = repo;
+    }
+    @Bean
+    public void handleXmlRpcRequest() throws XmlRpcException, IOException {
+
+        WebServer webServer = new WebServer(8089);
+        PropertyHandlerMapping phm = new PropertyHandlerMapping();
+        // Thêm các đối tượng xử lý yêu cầu XML-RPC
+        phm.addHandler("CLIENT", IpccResponseHandler.class);
+        webServer.getXmlRpcServer().setHandlerMapping(phm);
+        // Khởi động WebServer
+        webServer.start();
+    }
+
     public String getResponseIpcc(String callStatus, String transactionId, String callOutId, String startTime, String duration, String deviceId, String caller, String callRecipient) {
         logger.info("Response from Ipcc: callStatus=" + callStatus + "|transactionId=" + transactionId + "|callOutId=" + callOutId + "|startTime=" + startTime + "|duration=" + duration + "|deviceId=" + deviceId);
+        repo.save(new XmlRpcIpccResponse(callStatus,transactionId,callOutId,startTime,duration,caller,callRecipient));
         String reCode = "";
         try {
             if (callStatus != null && transactionId != null && callOutId != null && startTime != null && duration != null) {

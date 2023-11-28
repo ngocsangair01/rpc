@@ -1,4 +1,4 @@
-package com.example.rpcclienttest;
+package com.example.rpcclienttest.util;
 
 import lombok.Getter;
 import lombok.Setter;

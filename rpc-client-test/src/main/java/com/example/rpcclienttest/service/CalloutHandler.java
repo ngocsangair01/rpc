@@ -1,5 +1,7 @@
-package com.example.rpcclienttest;
+package com.example.rpcclienttest.service;
 
+import com.example.rpcclienttest.util.CalloutConfig;
+import com.example.rpcclienttest.util.CalloutUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
