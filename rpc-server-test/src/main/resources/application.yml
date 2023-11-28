@@ -1,6 +1,10 @@
 server:
   port: 8081
-spring:
-  xml:
-    namespaces:
-      doan-xem: /xml-rpc
+call:
+  ipcc:
+    #    xmlRpcUrl: http://10.208.70.9:8092/agentserver,http://10.208.70.10:8092/agentserver,http://10.40.6.4:8083/agentserver,http://10.40.6.5:8083/agentserver,http://192.168.92.13:8282/agentserver,http://192.168.92.14:8282/agentserver
+    xmlRpcUrl: http://localhost:8089
+    user: abc
+    password: abc
+    appCode: COC
+    methods: CLIENT.getResponse
