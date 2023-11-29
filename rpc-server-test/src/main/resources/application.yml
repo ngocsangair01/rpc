@@ -7,4 +7,4 @@ call:
     user: abc
     password: abc
     appCode: COC
-    methods: CLIENT.getResponse
+    methods: CLIENT.getResponseIpcc
